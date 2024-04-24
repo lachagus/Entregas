@@ -1,15 +1,19 @@
-//Agregamos el módulo de File System y hacemos un require del mismo
-const fs = require("fs");
+//Importación de módulos
+import fs from "fs";
 
 //Variable que dice en qué carpeta se ubica el archivo json donde se irán cargando todos los productos
-let pathFile = "./data/products.json"
+//En este caso ya no está en la ruta raíz sino en la carpeta SRC
+let pathFile = "./src/data/products.json";
 
 //Array de Productos donde se irán almacenando los mismos
 let products = [];
 
-//Fn. que recibe todos los datos, las propiedades de los productos
-//Pasa a ser asincrónica
-const addProduct = async (title, description, price, thumbnail, code, stock) => {
+//Fn. asinc. que recibe todos los datos, las propiedades de los productos.
+//En este caso no mandamos todas las propiedades por parámetro sino que desestructuramos dichas propiedades con el "producto" que recibimos.
+//Esto sirve para que independientemente el orden en el que recibamos las prop., se desestructure
+const addProduct = async (product) => {
+    const {title, description, price, thumbnail, code, stock} = product;
+    await getProducts();
 
     //Objeto nuevo 
     const newProduct = {
@@ -44,8 +48,8 @@ const addProduct = async (title, description, price, thumbnail, code, stock) => 
 
 };
 
-//Fn. que muestra los productos
-const getProducts = async () => {
+//Fn. que muestra los productos. Recibe como parámetro el límite.
+const getProducts = async (limit) => {
 
     //Lee el archivo Json que se sreó con los productos
     //Primer parámetro la ruta y segundo parámetro la codificación
@@ -53,17 +57,14 @@ const getProducts = async () => {
     //console.log(productsJson);    
 
     //Cómo hacer para que no lo traiga en archivo plano sino en array, se debe parsear
-    //A la variable array products, le reasignamos el valor. en caso de que no existiese información, asgnamos un array vacío
+    //A la variable array products, le reasignamos el valor. En caso de que no existiese información, asignamos un array vacío
     products = JSON.parse(productsJson) || [];
 
-    //Acá mujestra todo lo que hay en el archivo Json
-    //console.log(products);
+    //Chequea si no llega el valor límite. Si se cumple retorna los pruductos.
+    if(!limit) return products;
 
-    //Acá muestra el elemento del array que hay en la posición que pongamos. Todo lo trae desde el File System
-    //console.log(products[1]);
-
-    //Retorna los pruductos. Los asigna y los parsea
-    return (products);
+    //Caso contrario retorna desde la posición 0 del array hasta la posición límite que recibe por parámetro
+    return products.slice(0, limit);
 };
 
 //Fn. que muestra los productos por ID. Se hace asíncrona para que lo devuelva después de que se cargó en array en el  paso anterior
@@ -118,19 +119,11 @@ const deleteProduct = async (id) => {
 };
 
 
-//TEST 
-
-//Devuelve todos los productos del array que están en el archivo Json
-//getProducts();
-
-//Devuelve (busca) el producto (elemento) del array según el ID que pongamos
-//getProductsById(2);
-
-//Primero se pasa el ID del producto a modificar y la data que se va a modificar. Se hace un objeto.
-//updateProduct(3, {
-//    title: "P3",
-//    description: "Producto 3",
-//});
-
-//Elimina le producto 2
-deleteProduct(2);
+//Exportamos las funciones
+export default {
+    addProduct,
+    getProducts,
+    getProductsById,
+    updateProduct, 
+    deleteProduct
+}
