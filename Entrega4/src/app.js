@@ -36,7 +36,6 @@ app.get("/products", async (req, res) => {
 
     } catch (error) {
         console.log(error);
-        //res.status(400).json({error: error.message});
     }
 
 })
@@ -58,7 +57,6 @@ app.get("/products/:pid", async (req, res) => {
 
     } catch (error) {
         console.log(error);
-        res.status(400).json({error: error.message});
     }
     
 })

@@ -10,7 +10,7 @@ let products = [];
 
 //Fn. asinc. que recibe todos los datos, las propiedades de los productos.
 //En este caso no mandamos todas las propiedades por parámetro sino que desestructuramos dichas propiedades con el "producto" que recibimos.
-//Esto sirve para que independientemente del orden en el que recibamos las prop., se desestructure
+//Esto sirve para que independientemente el orden en el que recibamos las prop., se desestructure
 const addProduct = async (product) => {
     const {title, description, price, thumbnail, code, stock} = product;
     await getProducts();
@@ -74,12 +74,8 @@ const getProductsById = async (id) => {
     await getProducts();
     const product = products.find(product => product.id === id);
     if (!product) {
-        //console.log(`No se encontró el producto con el ID ${id}.`);
-        //return;
-
-        //La manera correcta para mostrar el error es a través de un throw error
-        //Esto está ligado con el try catch de app.js
-        throw Error(`No se encontró el producto con el id ${id}`);
+        console.log(`No se encontró el producto con el ID ${id}.`);
+        return;
     };
 
     //console.log(product);
