@@ -12,6 +12,6 @@ const router = Router();
 router.use("/products", productsRouters);
 
 //En este están todas las rutas de los carts
-router.use("/products", cartsRouters);
+router.use("/carts", cartsRouters);
 
 export default router;

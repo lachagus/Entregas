@@ -21,7 +21,7 @@ router.post("/", async (req, res) => {
 });
 
 //Endpoint POST con dos parámetros
-router.post("/:cid/product/:pid", async (req, res) => {
+router.post("/:cid/product/:pid ", async (req, res) => {
 
     try {
         const {cid, pid} = req.params;
@@ -29,7 +29,6 @@ router.post("/:cid/product/:pid", async (req, res) => {
 
         //Muestra el carrito creado
         res.status(201).json(cart);
-
 
     } catch (error) {
         console.log(error);

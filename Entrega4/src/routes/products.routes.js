@@ -29,7 +29,7 @@ router.get("/", async (req, res) => {
 
 })
 
-router.get("/products/:pid", async (req, res) => {
+router.get("/:pid", async (req, res) => {
 
     try {
 
