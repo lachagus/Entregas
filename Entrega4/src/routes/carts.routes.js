@@ -9,7 +9,7 @@ router.post("/", async (req, res) => {
 
     try {
 
-        const cart = await cartManager.createCart(); 
+        const cart = await cartManager.createCart();
 
         //Muestra el carrito creado
         res.status(201).json(cart);
@@ -24,8 +24,8 @@ router.post("/", async (req, res) => {
 router.post("/:cid/product/:pid ", async (req, res) => {
 
     try {
-        const {cid, pid} = req.params;
-        const cart = await cartManager.addProductToCart(+cid, +pid); 
+        const { cid, pid } = req.params;
+        const cart = await cartManager.addProductToCart(+cid, +pid);
 
         //Muestra el carrito creado
         res.status(201).json(cart);
@@ -56,9 +56,9 @@ router.get("/", async (req, res) => {
 router.get("/:cid", async (req, res) => {
 
     try {
-        
-        const {cid} = req.params;
-        const cart = await cartManager.getCartById(+cid); 
+
+        const { cid } = req.params;
+        const cart = await cartManager.getCartById(+cid);
 
         res.status(200).json(cart);
 

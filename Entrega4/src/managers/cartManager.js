@@ -14,10 +14,7 @@ const getCarts = async () => {
     carts = JSON.parse(cartsJson) || [];
 
     //Muestra todo lo que hay en el archivo Json
-    console.log(carts);
-
-    //Acá muestra el elemento del array que hay en la posición que pongamos. Todo lo trae desde el File System
-    //console.log(carts[1]);
+    //console.log(carts);
 
     return (carts);
 };
