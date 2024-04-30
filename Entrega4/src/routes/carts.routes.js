@@ -25,7 +25,7 @@ router.post("/:cid/product/:pid ", async (req, res) => {
 
     try {
         const {cid, pid} = req.params;
-        const cart = await cartManager.addProductToCart(cid, pid); 
+        const cart = await cartManager.addProductToCart(+cid, +pid); 
 
         //Muestra el carrito creado
         res.status(201).json(cart);
@@ -58,7 +58,7 @@ router.get("/:cid", async (req, res) => {
     try {
         
         const {cid} = req.params;
-        const cart = await cartManager.getCartById(cid); 
+        const cart = await cartManager.getCartById(+cid); 
 
         res.status(200).json(cart);
 
