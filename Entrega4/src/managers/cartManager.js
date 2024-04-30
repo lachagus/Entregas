@@ -36,7 +36,7 @@ const createCart = async () => {
 
 //Método que recupera un carrito por ID
 const getCartById = async (cid) => {
-    await getCarts;
+    await getCarts();
 
     //Busca el carrito con el ID = al carrito que se recibe
     const cart = carts.find(c => c.id === cid);
