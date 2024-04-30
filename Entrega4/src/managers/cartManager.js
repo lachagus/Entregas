@@ -1,19 +1,25 @@
 //También trabajamos con el file system, lo importamos
 import fs from "fs";
 
-//Arreglo de carritos
-let carts = [];
-
 //Acá se van a crear los carritos
 const pathFile = "./src/data/carts.json";
+
+//Arreglo de carritos
+let carts = [];
 
 const getCarts = async () => {
 
     //Para que lea el archivo
-    const cartsJson = await fs.promises.readFile(pathFile);
+    const cartsJson = await fs.promises.readFile(pathFile, "utf-8");
     carts = JSON.parse(cartsJson) || [];
 
-    return carts;
+    //Muestra todo lo que hay en el archivo Json
+    console.log(carts);
+
+    //Acá muestra el elemento del array que hay en la posición que pongamos. Todo lo trae desde el File System
+    console.log(carts[1]);
+
+    return (carts);
 };
 
 //Creamos un método para crear un carrito 
