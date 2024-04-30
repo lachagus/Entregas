@@ -59,13 +59,22 @@ const addProductToCart = async (cid, pid) => {
     const index = carts.findIndex ( c => c.id === cid);
 
     //Si index = -1 no encuentra ese ID en la posición
-    if(index === -1) return `No de encontró el carrito con el ID ${cid}`;
+    if(index === -1) return `No se encontró el carrito con el ID ${cid}`;
 
-    //Si lo encuentra, pushea un objeto con el ID del prod. y la quantity
-    carts[index].products.push({
-        product: pid,
-        quantity: 1
-    });
+    // Se busca si el producto ya está en el carrito
+    const productIndex = carts[index].products.findIndex(p => p.product === pid);
+
+    // Si el producto ya está en el carrito, se suma la cantidad
+    if (productIndex !== -1) {
+        carts[index].products[productIndex].quantity++;
+    } else {
+        // Si no está en el carrito, se añade con cantidad 1
+        carts[index].products.push({
+            product: pid,
+            quantity: 1
+        });
+    }
+
 
     //Retorna el carrito
     return carts[index]
