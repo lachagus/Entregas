@@ -1,0 +1,80 @@
+//También trabajamos con el file system, lo importamos
+import { captureRejectionSymbol } from "events";
+import fs from "fs";
+
+//Arreglo de carritos
+let carts = [];
+
+//Acá se van a crear los carritos
+const path = "./src/data/carts.json";
+
+const getCarts = async () => {
+
+    //Para que lea el archivo
+    const cartsJson = await fs.promises.readFile(pathFile);
+    carts = JSON.parse(cartsJson) || [];
+
+    return carts;
+};
+
+//Creamos un método para crear un carrito 
+const createCart = async () => {
+    await getCarts();
+
+    const newCart = {
+        id: carts.length + 1,
+        products: []
+    };
+
+    //Agregamos el nuevo carrito
+    carts.push(newCart);
+
+    await fs.promises.writeFile(pathFile, JSON.stringify(carts));
+
+    return newCart;
+
+};
+
+//Método que recupera un carrito por ID
+const getCartById = async (cid) => {
+    await getCarts;
+
+    //Busca el carrito con el ID = al carrito que se recibe
+    const cart = carts.find(c => c.id === cid);
+
+    //Manejamos el error. Si no encuentra el carrito con ese ID
+    if(!cart) return `No se encuentra el carrito con el ID ${cid}`
+
+    //Si lo encuentra retorna todos los productos de ese carrito
+    return cart.products;
+}
+
+//Fn. para agregar un producto al carrito. Recibe el ID del carrito y el ID del producto
+const addProductToCart = async (cid, pid) => {
+
+    //Se asignan los productos del array
+    await getProducts();
+
+    //Primero se busca carrito que coincide con el cid que se está recibiendo
+    const index = carts.findIndex ( c => c.id === cid);
+
+    //Si index = -1 no encuentra ese ID en la posición
+    if(index === -1) return `No de encontró el carrito con el ID ${cid}`;
+
+    //Si lo encuentra, pushea un objeto con el ID del prod. y la quantity
+    carts[index].products.push({
+        product: pid,
+        quantity: 1
+    });
+
+    //Retorna el carrito
+    return carts[index]
+};
+
+
+export default {
+    getCarts,
+    getCartById,
+    createCart,
+    addProductToCart
+}

@@ -10,12 +10,13 @@ let products = [];
 
 //Fn. asinc. que recibe todos los datos, las propiedades de los productos.
 //En este caso no mandamos todas las propiedades por parámetro sino que desestructuramos dichas propiedades con el "producto" que recibimos.
-//Esto sirve para que independientemente el orden en el que recibamos las prop., se desestructure
+//Esto sirve para que independientemente del orden en el que recibamos las prop., se desestructure
 const addProduct = async (product) => {
     const {title, description, price, thumbnail, code, stock} = product;
     await getProducts();
 
-    //Objeto nuevo 
+    //Objeto nuevo
+    //Se agrega la propiedad status que por defecto se crea en true
     const newProduct = {
         id: products.length + 1,
         title,
@@ -23,7 +24,8 @@ const addProduct = async (product) => {
         price,
         thumbnail,
         code,
-        stock
+        stock,
+        status: true
     }
 
     //Se debe validar que todos los campos contengan datos. Otra manera de hacerlo.
@@ -74,11 +76,11 @@ const getProductsById = async (id) => {
     await getProducts();
     const product = products.find(product => product.id === id);
     if (!product) {
-        console.log(`No se encontró el producto con el ID ${id}.`);
-        return;
+        //La manera correcta para mostrar el error es a través de un throw error
+        //Esto está ligado con el try catch de app.js
+        throw Error(`No se encontró el producto con el id ${id}`);
     };
 
-    //console.log(product);
     return product;
 };
 
@@ -117,7 +119,6 @@ const deleteProduct = async (id) => {
     //Se sobre escibe el producto completo con el producto modificado. Se pasa el pathFile y se guarda Json y pasa el producto
     await fs.promises.writeFile(pathFile, JSON.stringify(products));
 };
-
 
 //Exportamos las funciones
 export default {
