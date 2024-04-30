@@ -1,12 +1,11 @@
 //También trabajamos con el file system, lo importamos
-import { captureRejectionSymbol } from "events";
 import fs from "fs";
 
 //Arreglo de carritos
 let carts = [];
 
 //Acá se van a crear los carritos
-const path = "./src/data/carts.json";
+const pathFile = "./src/data/carts.json";
 
 const getCarts = async () => {
 
