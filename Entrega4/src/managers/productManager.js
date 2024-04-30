@@ -56,7 +56,7 @@ const getProducts = async (limit) => {
     //Lee el archivo Json que se sreó con los productos
     //Primer parámetro la ruta y segundo parámetro la codificación
     const productsJson = await fs.promises.readFile(pathFile, "utf-8");
-    //console.log(productsJson);    
+    console.log(productsJson);    
 
     //Cómo hacer para que no lo traiga en archivo plano sino en array, se debe parsear
     //A la variable array products, le reasignamos el valor. En caso de que no existiese información, asignamos un array vacío

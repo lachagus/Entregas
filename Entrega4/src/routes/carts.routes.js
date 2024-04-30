@@ -35,7 +35,24 @@ router.post("/:cid/product/:pid ", async (req, res) => {
     }
 });
 
-//Endpoint GET
+//Endpoint GET para todos
+
+router.get("/", async (req, res) => {
+
+    try {
+
+        const carts = await cartManager.getCarts();
+
+        res.status(200).json(carts);
+
+    } catch (error) {
+        console.log(error);
+        //res.status(400).json({error: error.message});
+    }
+
+})
+
+//Endpoint GET para uno
 router.get("/:cid", async (req, res) => {
 
     try {
