@@ -41,6 +41,9 @@ const update = async (id, data) => {
 const deleteOne = async (id) => {
     const product = await productModel.deleteOne({_id: id});
 
+    //Manejamos el error desde esta capa DAO
+    if(product.deletedCount === 0) return false;
+
     //Retorna true porque avisa que se ha eliominado ese producto
     return true;
 }

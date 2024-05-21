@@ -17,6 +17,11 @@ const productSchema = new mongoose.Schema ({
         require: true
     },
 
+    price: {
+        type: Number,
+        requiere: true
+    },
+
     thumbnail: {
         type: Array,
         default: []

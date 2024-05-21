@@ -14,7 +14,7 @@ router.get("/", async (req, res) => {
 
         const products = await productDao.getAll();
 
-        res.status(200).json({status: "success", payload: products});
+        res.status(200).json({ status: "success", payload: products });
 
     } catch (error) {
         console.log(error);
@@ -26,79 +26,61 @@ router.get("/", async (req, res) => {
 router.get("/:pid", async (req, res) => {
 
     try {
-
-        //Lee por parámetros el pid (product id) que se recibe
         const { pid } = req.params;
 
-        //Se determine y busca el producto id que se está recibiendo
-        //Se hace de manera individual ya que se está buscando sólo un producto
-        //Se tiene que parsear el pid recibido porque siempre llega como string: +pid el + transforma en nro.
-        const product = await productManager.getProductsById(+pid);
+        //Acá no se parsea el ID porque en mongo es alfanummérico, es un string
+        const product = await productDao.getById(pid);
 
-        //Express por defecto devuelve 200 pero lo configuramos igual para que se sepa que se manda el 200
-        res.status(200).json(product);
+        //Manejo de errores
+        if (!product) return res.status(404).json({ status: "Error", msg: `Producto con el ID ${pid} no encontrado` });
+
+        res.status(200).json({ status: "success", payload: product });
 
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        console.log(error);
     }
 
 });
 
-//Creamos la ruta del POST (endpoint)
 router.post("/", async (req, res) => {
-
     try {
-
-        //Recibe dentro de la constante "produtc" todo el cuerpo del body de los productos
         const product = req.body;
-
-        //Le pasamos el product que se recibe por body
-        const newProduct = await productManager.addProduct(product);
-
-        //Hacemos una respueta de creación de producto (201) que se acaba de crear anteriormente
-        res.status(201).json(newProduct);
+        const newProduct = await productDao.create(product);
+        res.status(201).json({ status: "success", payload: newProduct });
 
     } catch (error) {
         console.log(error);
     }
 });
 
-//Creamos la ruta (endpoint) del PUT. Recibe el ID del producto
 router.put("/:pid", async (req, res) => {
 
     try {
-
-        //Recibe el product id desde los parámetros
         const { pid } = req.params;
+        const productData = req.body;
+        const updateProduct = await productDao.update(pid, productData);
 
-        //Recibe dentro de la constante "produtc" todo el cuerpo del body de lo que se va a modificar
-        const product = req.body;
+        if (!updateProduct) return res.status(404).json({ status: "Error", msg: `Producto con el ID ${pid} no encontrado` });
 
-        //Recibe como primer parámetro el id del producto y como segundo parámetro la data del producto que se recibe por el body
-        const updateProduct = await productManager.updateProduct(pid, product);
-
-        //Hacemos una respueta de la actualización del
-        res.status(201).json(updateProduct);
+        res.status(200).json({ status: "success", payload: updateProduct });
 
     } catch (error) {
         console.log(error);
     }
-
 });
 
-//Creamos la ruta (endpoint) del DELETE. Recibe el ID del producto
 router.delete("/:pid", async (req, res) => {
 
     try {
-
-        //Recibe el product id desde los parámetros
         const { pid } = req.params;
 
-        //Se pasa el id de producto que se está recibiendo
-        await productManager.deleteProduct(pid);
+        await productDao.deleteOne(pid);
 
-        //Hacemos una respueta de eliminación del producto
-        res.status(201).json({ message: "Producto eliminado" });
+        //Se guarda la respuesta desde el DAO
+        const product = await productDao.deleteOne(pid);
+        if(!product) return res.status(404).json({ status: "Error", msg: `Producto con el ID ${pid} no encontrado` });
+
+        res.status(200).json({ status: "success", payload: "Producto eliminado" });
 
     } catch (error) {
         console.log(error);
