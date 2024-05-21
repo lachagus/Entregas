@@ -1,26 +1,20 @@
-//Importamos router de express
 import { Router } from "express";
 
-//Importamos el product manager porque se creó la carpeta managers
-import productManager from "../managers/productManager.js";
+//No se usa más el File System, se usa Mongo
+import productDao from "../dao/mongoDao/product.dao.js";
 
 const router = Router();
-
-//Configuramos dos métodos
-//Req = request --> la info que recibimos dentro del servidor, del cliente al servidor
-//Res = response --> es la respuesta que se manda desde el servido y espera el cliente (postman en este caso), sino queda esperando por algo
-//Cambiamos el prefijo "app." por router. Sacamos el "/products" porque ya no se necesita, va sólo /
 router.get("/", async (req, res) => {
 
     try {
-
         //Desestructura la query que venga con el valor del límite
-        const { limit } = req.query;
-
+        //const { limit } = req.query;
         //Se le pasa el límite que se recibe por query
-        const products = await productManager.getProducts(limit);
+        //const products = await productManager.getProducts(limit);
 
-        res.status(200).json(products);
+        const products = await productDao.getAll();
+
+        res.status(200).json({status: "success", payload: products});
 
     } catch (error) {
         console.log(error);
@@ -104,7 +98,7 @@ router.delete("/:pid", async (req, res) => {
         await productManager.deleteProduct(pid);
 
         //Hacemos una respueta de eliminación del producto
-        res.status(201).json({message: "Producto eliminado"});
+        res.status(201).json({ message: "Producto eliminado" });
 
     } catch (error) {
         console.log(error);
