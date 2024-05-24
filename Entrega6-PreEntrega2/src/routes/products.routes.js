@@ -7,14 +7,44 @@ const router = Router();
 router.get("/", async (req, res) => {
 
     try {
-        //Desestructura la query que venga con el valor del límite
-        //const { limit } = req.query;
+        //Query que pide el desafío.
+        //Category y status son los filtros. Son opcionales.
+        const { limit, page, sort, category, status } = req.query;
+
         //Se le pasa el límite que se recibe por query
-        //const products = await productManager.getProducts(limit);
+        const options = {
+            limit: limit || 10,
+            page: page || 1,
+            sort: {
 
-        const products = await productDao.getAll();
+                //Si es asc --> 1 orden ascendente, sino -1 es descendente
+                price: sort === "asc" ? 1 : -1,
+            },
+            lean: true
+        };
 
-        res.status(200).json({ status: "success", payload: products });
+        //Filtro status
+        if (status) {
+            //En la búsqueda se pasa el status
+            //Se podría poner sólo {status} porque para JS si la propiedad y la clave y el valor son = se llaman iguales, se puede poner así solo
+            const products = await productDao.getAll({ status: status }, options);
+            return res.status(200).json({ products });
+        };
+
+        //Filtro category
+        if (category) {
+            //En la búsqueda se pasa el status
+            //Se podría poner sólo {status} porque para JS si la propiedad y la clave y el valor son = se llaman iguales, se puede poner así solo
+            const products = await productDao.getAll({ category: category }, options);
+            return res.status(200).json({ products });
+        };
+
+        //Si no se cumple ninguna de las otras dos opciones con filtros, se obtienen todos los productos
+        const products = await productDao.getAll({}, options);
+
+        //res.status(200).json({ status: "success", payload: products });
+
+        res.status(200).json({ status: "success", products });
 
     } catch (error) {
         console.log(error);
@@ -81,7 +111,7 @@ router.delete("/:pid", async (req, res) => {
 
         //Se guarda la respuesta desde el DAO
         const product = await productDao.deleteOne(pid);
-        if(!product) return res.status(404).json({ status: "Error", msg: `Producto con el ID ${pid} no encontrado` });
+        if (!product) return res.status(404).json({ status: "Error", msg: `Producto con el ID ${pid} no encontrado` });
 
         res.status(200).json({ status: "success", payload: "Producto eliminado" });
 
