@@ -56,11 +56,18 @@ const deleteProductInCart = async (cid, pid) => {
     return cartUpdate;
 };
 
-//Este método sólo funciona cuando seteo
+//Actualiza el carrito
 const update = async (cid, data) => {
-    await cartModel.updateOne({ _id: cid }, { $set: { products: [] } });
-    await cartModel.updateOne({ _id: cid }, { $set: { products: data } });
-    const cart = await cartModel.findById(cid);
+    //await cartModel.updateOne({ _id: cid }, { $set: { products: [] } });
+    //await cartModel.updateOne({ _id: cid }, { $set: { products: data } });
+    //const cart = await cartModel.findById(cid);
+
+    const cart = await cartModel.findOneAndUpdate(
+        { _id: cid },
+        { $set: { products: data } },
+        { new: true } // Devuelve el carrito actualizado
+    );
+
     return cart;
 };
 

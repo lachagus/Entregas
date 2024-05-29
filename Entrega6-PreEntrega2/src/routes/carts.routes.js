@@ -35,8 +35,7 @@ router.get("/:cid", async (req, res) => {
 router.put("/:cid", async (req, res) => {
     try {
         const { cid } = req.params;
-        //const body = req.body;
-        const { body } = req.body;
+        const body = req.body;        
         const cart = await cartDao.update(cid, body);
 
         if (!cart) return res.status(404).json({ status: "Error", msg: `No se encontró el carrito con el id ${cid}` });
