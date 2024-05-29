@@ -1,11 +1,11 @@
 //También trabajamos con el file system, lo importamos
 import fs from "fs";
 
-//Acá se van a crear los carritos
-const pathFile = "./src/data/carts.json";
-
 //Arreglo de carritos
 let carts = [];
+
+//Acá se van a crear los carritos
+const pathFile = "./src/data/carts.json";
 
 const getCarts = async () => {
 
@@ -13,13 +13,9 @@ const getCarts = async () => {
     const cartsJson = await fs.promises.readFile(pathFile, "utf-8");
     carts = JSON.parse(cartsJson) || [];
 
-    //Muestra todo lo que hay en el archivo Json
-    //console.log(carts);
-
     return (carts);
 };
 
-//Creamos un método para crear un carrito 
 const createCart = async () => {
     await getCarts();
 
@@ -28,7 +24,7 @@ const createCart = async () => {
         products: []
     };
 
-    //Agregamos el nuevo carrito
+    //Agrega nuevo carrito creado anteriormente
     carts.push(newCart);
 
     await fs.promises.writeFile(pathFile, JSON.stringify(carts));
@@ -37,14 +33,14 @@ const createCart = async () => {
 
 };
 
-//Método que recupera un carrito por ID
+//Recupera un carrito por ID
 const getCartById = async (cid) => {
     await getCarts();
 
     //Busca el carrito con el ID = al carrito que se recibe
     const cart = carts.find(c => c.id === cid);
 
-    //Manejamos el error. Si no encuentra el carrito con ese ID
+    //Si no encuentra el carrito con ese ID, muestra error
     if(!cart) return `No se encuentra el carrito con el ID ${cid}`
 
     //Si lo encuentra retorna todos los productos de ese carrito

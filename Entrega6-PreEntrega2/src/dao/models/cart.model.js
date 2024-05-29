@@ -1,16 +1,15 @@
-//Modelo de los carritos
 import mongoose from "mongoose";
 
-//Nombre de la colección de carritos
 const cartCollection = "carts";
 
-//Esquema de los carritos
 const cartSchema = new mongoose.Schema({
     products: {
-        type: Array,
-        default: []
-    }
+        type: [{ product: { type: mongoose.Schema.Types.ObjectId, ref: "products" }, quantity: Number }],
+    },
 });
 
-//Modelos
+cartSchema.pre("find", function () {
+    this.populate("products.product");
+});
+
 export const cartModel = mongoose.model(cartCollection, cartSchema);

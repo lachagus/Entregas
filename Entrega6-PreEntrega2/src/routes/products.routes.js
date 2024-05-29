@@ -1,6 +1,4 @@
 import { Router } from "express";
-
-//No se usa más el File System, se usa Mongo
 import productDao from "../dao/mongoDao/product.dao.js";
 
 const router = Router();
@@ -48,7 +46,7 @@ router.get("/", async (req, res) => {
 
     } catch (error) {
         console.log(error);
-        res.status(500).json({status: "error", msg: "Error interno del servidor"});
+        res.status(500).json({ status: "error", msg: "Error interno del servidor" });
     }
 
 })
@@ -68,7 +66,7 @@ router.get("/:pid", async (req, res) => {
 
     } catch (error) {
         console.log(error);
-        res.status(500).json({status: "error", msg: "Error interno del servidor"});
+        res.status(500).json({ status: "error", msg: "Error interno del servidor" });
     }
 
 });
@@ -77,11 +75,12 @@ router.post("/", async (req, res) => {
     try {
         const product = req.body;
         const newProduct = await productDao.create(product);
+
         res.status(201).json({ status: "success", payload: newProduct });
 
     } catch (error) {
         console.log(error);
-        res.status(500).json({status: "error", msg: "Error interno del servidor"});
+        res.status(500).json({ status: "error", msg: "Error interno del servidor" });
     }
 });
 
@@ -98,7 +97,7 @@ router.put("/:pid", async (req, res) => {
 
     } catch (error) {
         console.log(error);
-        res.status(500).json({status: "error", msg: "Error interno del servidor"});
+        res.status(500).json({ status: "error", msg: "Error interno del servidor" });
     }
 });
 
@@ -117,7 +116,7 @@ router.delete("/:pid", async (req, res) => {
 
     } catch (error) {
         console.log(error);
-        res.status(500).json({status: "error", msg: "Error interno del servidor"});
+        res.status(500).json({ status: "error", msg: "Error interno del servidor" });
     }
 
 });

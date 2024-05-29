@@ -3,7 +3,7 @@
 import mongoose from "mongoose";
 import mongoosePaginate from "mongoose-paginate-v2";
 
-//Nombre de la colección de productos
+//Colección de productos
 const productCollection = "products";
 
 //Esquema de los productos
@@ -52,5 +52,5 @@ const productSchema = new mongoose.Schema ({
 //Se agrega el pluggin para poder hacer la paginación
 productSchema.plugin(mongoosePaginate);
 
-//Modelos
+//Modelo
 export const productModel = mongoose.model(productCollection, productSchema);
