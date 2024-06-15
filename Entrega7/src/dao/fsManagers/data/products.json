@@ -1,0 +1,110 @@
+[
+    {
+        "id": 1,
+        "title": "P1",
+        "description": "Producto 1",
+        "price": 708,
+        "thumbnail": "http\\www.google.com",
+        "code": "ASM1985",
+        "stock": 38
+    },
+    {
+        "id": 2,
+        "title": "P2",
+        "description": "Producto 2",
+        "price": 2206,
+        "thumbnail": "http\\www.google.com",
+        "code": "FNM1987",
+        "stock": 36
+    },
+    {
+        "id": 3,
+        "title": "P3",
+        "description": "Producto 3",
+        "price": 2906,
+        "thumbnail": "http\\www.google.com",
+        "code": "DRP2016",
+        "stock": 7
+    },
+    {
+        "id": 4,
+        "title": "P4",
+        "description": "Producto 4",
+        "price": 1102,
+        "thumbnail": "http\\www.google.com",
+        "code": "LPM2021",
+        "stock": 3
+    },
+    {
+        "id": 5,
+        "title": "P5",
+        "description": "Producto 5",
+        "price": 2512,
+        "thumbnail": "http\\www.google.com",
+        "code": "GLC1961",
+        "stock": 62
+    },
+    {
+        "id": 6,
+        "title": "P6",
+        "description": "Producto ",
+        "price": 405,
+        "thumbnail": "http\\www.google.com",
+        "code": "HER1960",
+        "stock": 63
+    },
+    {
+        "id": 7,
+        "title": "P7",
+        "description": "Producto 7",
+        "price": 1808,
+        "thumbnail": "http\\www.google.com",
+        "code": "NNS1937",
+        "stock": 86
+    },
+    {
+        "id": 8,
+        "title": "P8",
+        "description": "Producto 8",
+        "price": 2302,
+        "thumbnail": "http\\www.google.com",
+        "code": "FMS1989",
+        "stock": 35
+    },
+    {
+        "id": 9,
+        "title": "P9",
+        "description": "Producto 9",
+        "price": 412,
+        "thumbnail": "http\\www.google.com",
+        "code": "EAP1992",
+        "stock": 33
+    },
+    {
+        "id": 10,
+        "title": "P10",
+        "description": "Producto 10",
+        "price": 651,
+        "thumbnail": "http\\www.google.com",
+        "code": "ASM2024",
+        "stock": 25
+    },
+    {
+        "id": 11,
+        "title": "P11",
+        "description": "Producto 11",
+        "price": 299,
+        "thumbnail": "http\\www.google.com",
+        "code": "FNM2024",
+        "stock": 10
+    },
+    {
+        "id": 12,
+        "title": "P12",
+        "description": "Producto 12",
+        "price": 895,
+        "thumbnail": "http\\www.google.com",
+        "code": "DRP2024",
+        "stock": 13
+    }
+]

@@ -1,0 +1,18 @@
+[
+    {
+    "first_name": "USR_1",
+    "last_name": "Test",
+    "email": "usr1@test.com",
+    "password": "Pwd1",
+    "edad": 33
+    },
+
+    {
+        "first_name": "USR_2",
+        "last_name": "Test",
+        "email": "usr2@test.com",
+        "password": "Pwd",
+        "edad": 67
+    }
+
+]
