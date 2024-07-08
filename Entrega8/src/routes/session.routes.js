@@ -63,7 +63,7 @@ router.get("/current", (req, res) => {
         const checkToken = verifyToken(token);
 
         if (!checkToken) return res.status(403).json({ status: "error", msg: "Token inválido" });
-
+        
         return res.status(200).json({ status: "success", payload: checkToken });
 
     } catch (error) {
