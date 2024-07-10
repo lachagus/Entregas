@@ -10,7 +10,7 @@ import { connectDB } from "./config/mongoDb.config.js";
 import apiRoutes from "./routes/index.routes.js"
 import { initializePassport } from "./config/passport.config.js";
 
-//Inicializa
+//Inicializa DB
 connectDB()
 
 const PORT = 8080;
@@ -49,8 +49,4 @@ app.use("/api", apiRoutes);
 
 app.listen(PORT, () => {
     console.log(`Escuchando servidor en el puerto ${PORT}`);
-
-    //app.listen(8080, () => {
-    //    console.log("Escuchando servidor en el puerto 8080");
-
 });

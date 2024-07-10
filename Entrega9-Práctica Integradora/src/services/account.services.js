@@ -5,10 +5,19 @@ const getOnAccount = async (query) => {
     return await accountDao.getOne(query);
 };
 
+//Recibe los datos del user
 const createAccount = async (userData) => {
+
+    //Desestructura userData. Si no tiene id lo pone como null por defecto.
     const { name, lastName, _id = null } = userData;
+
+    //Genera el nro. de la cuenta con un número aleatorio con ese margen de 1000000000
     const accountNumber = Math.floor(Math.random() * 1000000000);
+
+    //Genración del alias con la combinación del name, lastName todo en minúsculas y accountNumber de 4 posiciones en string
     const alias = `${name.toLowerCase()}.${lastName.toLowerCase()}.${accountNumber.toString().slice(-4)}`;
+
+    //Se arma el objeto de la cuenta
     const accountData = {
         alias,
         number: accountNumber.toString(),
@@ -17,6 +26,7 @@ const createAccount = async (userData) => {
     return await accountDao.create(accountData);
 };
 
+//
 const updateAccount = async (accountId, accountData) => {
     return await accountDao.update(accountId, accountData);
 };

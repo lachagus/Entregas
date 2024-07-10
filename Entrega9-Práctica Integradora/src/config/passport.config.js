@@ -1,3 +1,4 @@
+//Configuración de las estrategias de login y registro
 import passport from "passport";
 import local from "passport-local";
 import jwt from "passport-jwt";
@@ -11,34 +12,46 @@ const JWTStrategy = jwt.Strategy;
 const ExtractJWT = jwt.ExtractJwt;
 
 export const initializePassport = () => {
-    // Estrategia local registro
+
+    // Estrategia local de registro
     passport.use(
         "register",
-        new LocalStrategy({ passReqToCallback: true, usernameField: "email" }, async (req, username, password, done) => {
-            try {
-                const { name, lastName } = req.body;
-                const user = await userServices.getOnUser({ email: username });
-                if (user) return done(null, false, { message: "El usuario ya existe" });
+        new LocalStrategy({ passReqToCallback: true, usernameField: "email" },
+            async (req, username, password, done) => {
+                try {
 
-                const accountUser = await accountServices.createAccount({ name, lastName });
+                    //Desestructura el body
+                    const { name, lastName } = req.body;
 
-                const newUser = {
-                    name,
-                    lastName,
-                    email: username,
-                    password: createHash(password),
-                    account: accountUser._id,
-                };
+                    //Busca si existe el user o no a través del email que es único 
+                    const user = await userServices.getOnUser({ email: username });
 
-                const createUser = await userServices.registerUser(newUser);
+                    //Controla el error si ya existe el user
+                    if (user) return done(null, false, { message: "El usuario ya existe" });
 
-                await accountServices.updateAccount(accountUser._id, { userId: createUser._id })
+                    //Crea una cuenta que se asocia directamente al user, se hace desde los servicios
+                    const accountUser = await accountServices.createAccount({ name, lastName });
 
-                return done(null, createUser);
-            } catch (error) {
-                return done(error);
-            }
-        })
+                    //Si no existe, lo crea (_id viene dede mongo y lo devuelve con el _)
+                    const newUser = {
+                        name,
+                        lastName,
+                        email: username,
+                        password: createHash(password),
+                        account: accountUser._id,
+                    };
+
+                    //Se registra el user y se inyecta  la cuenta bancaria en el id del user
+                    const createUser = await userServices.registerUser(newUser);
+
+                    await accountServices.updateAccount(accountUser._id, { userId: createUser._id })
+
+                    return done(null, createUser);
+
+                } catch (error) {
+                    return done(error);
+                }
+            })
     );
 
     passport.use(
@@ -69,6 +82,7 @@ export const initializePassport = () => {
 
                 try {
                     return done(null, jwt_payload);
+
                 } catch (error) {
                     return done(error);
                 }
@@ -76,9 +90,8 @@ export const initializePassport = () => {
         )
     );
 
-
+    //Serializa y desserializa el user
     passport.serializeUser((user, done) => {
-
         done(null, user.id);
     });
 

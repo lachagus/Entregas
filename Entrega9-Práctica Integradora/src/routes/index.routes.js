@@ -1,3 +1,5 @@
+//Archivo de Indexación: se indexan todas las rutas (se importan)
+
 import { Router } from "express";
 import userRoutes from "./user.routes.js";
 import accountRoutes from "./account.routes.js";
